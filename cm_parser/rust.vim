@@ -1,6 +1,6 @@
 "==============================================================
 "    file: rust.vim
-"   brief: 
+"   brief:
 " VIM Version: 8.0
 "  author: tenfyzhong
 "   email: tenfy@tenfy.cn
@@ -36,7 +36,9 @@ function! cm_parser#rust#parameters(completed_item) "{{{
     let kind = get(a:completed_item, 'kind', '')
     let info = get(a:completed_item, 'info', '')
     let l:abbr = get(a:completed_item, 'abbr', '')
-    if kind ==# 'f' && !empty(word) && menu =~# '(.*)' && empty(info)
+    " if kind ==# 'f' && !empty(word) && menu =~# '(.*)' && empty(info)
+	" for ycm with rls, info is not always empty
+    if kind ==# 'f' && !empty(word) && menu =~# '(.*)'
         " ycm
         return <SID>parse(word, menu)
     elseif kind ==# 'f' && !empty(l:abbr) && word =~# l:abbr.'(' && !empty(info)
@@ -66,7 +68,8 @@ function! cm_parser#rust#echos(completed_item) "{{{
     let kind = get(a:completed_item, 'kind', '')
     let info = get(a:completed_item, 'info', '')
     let l:abbr = get(a:completed_item, 'abbr', '')
-    if kind ==# 'f' && !empty(word) && menu =~# '(.*)' && empty(info)
+    " if kind ==# 'f' && !empty(word) && menu =~# '(.*)' && empty(info)
+    if kind ==# 'f' && !empty(word) && menu =~# '(.*)'
         " ycm
         return [menu]
     elseif kind ==# 'f' && !empty(l:abbr) && word =~# l:abbr.'(' && !empty(info)
