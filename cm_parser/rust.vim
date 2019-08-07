@@ -16,14 +16,18 @@
 "
 " neocomplete+vim-racer
 " {'word': 'from_raw_parts(', 'menu': '[O] unsafe from_raw_parts(ptr: *mut T, length: usize, capacity: usize) -> Vec<T>', 'info': 'pub unsafe fn from_raw_parts(ptr: *mut T, length: usize, capacity: usize) -> Vec<T>', 'kind': 'f', 'abbr': 'from_raw_parts'}
+"
+" more complex:
+" {'word': 'find_edge_of_island', 'menu': 'fn find_edge_of_island( grid: &[Vec<char>], (row_size, col_size): (usize, usize), (row, col): (usize, usize), visited: &mut HashSet<(usize, usize)>, )', 'user_data': '0', 'info': 'find_edge_of_island^@^@', 'kind': 'f', 'abbr': 'find_edge_of_island'}
 '
 function! s:parse(word, param) "{{{
     " check is fn or not
-    let param = substitute(a:param, '\m.*'.a:word.'\%(<.*>\)\?\(([^)]*)\).*', '\1', '')
+    let param = substitute(a:param, '\m.*'.a:word.'\%(<.*>\)\?\((.*)\)\(\s*->.*\)\?$', '\1', '')
     while param =~# '\m<.*>'
         let param = substitute(param, '\m<[^>]*>', '', 'g')
     endwhile
     let param = substitute(param, '\m:\s*[^,)]*', '', 'g')
+    let param = substitute(param, '\m),[^)]*)', ')', 'g')
     let param = substitute(param, '\m(&\?\%(\s*\&''\w\+\s*\)\?\%(\s*mut\s\+\)\?self\s*\([,)]\)', '(\1', '')
     let param = substitute(param, '\m(\s*,\s*', '(', '')
     return [param]
