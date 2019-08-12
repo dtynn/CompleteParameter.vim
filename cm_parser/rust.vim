@@ -26,8 +26,8 @@ function! s:parse(word, param) "{{{
     while param =~# '\m<.*>'
         let param = substitute(param, '\m<[^>]*>', '', 'g')
     endwhile
-    let param = substitute(param, '\m:\s*[^,)]*', '', 'g')
-    let param = substitute(param, '\m),[^)]*)', ')', 'g')
+    let param = substitute(param, '\m:\s*[^,)]*', ':', 'g')
+    let param = substitute(param, '\m:,\%([^():]*)[^$]\)\?', ',', 'g')
     let param = substitute(param, '\m(&\?\%(\s*\&''\w\+\s*\)\?\%(\s*mut\s\+\)\?self\s*\([,)]\)', '(\1', '')
     let param = substitute(param, '\m(\s*,\s*', '(', '')
     return [param]
